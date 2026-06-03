@@ -14,10 +14,7 @@ def on_validation_error(request: Request, exc: RequestValidationError):
 
 @app.post("/figurinha", response_model=Figurinha, status_code=201)
 def createFig(fig:Figurinha):
-    try:
-        return FigurinhaService.addFig(fig)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    return FigurinhaService.addFig(fig)
 
 @app.get("/figurinhas")
 def getAllFigs():
@@ -32,10 +29,7 @@ def getFigs(id: int):
 
 @app.put("/figurinha/{id}", response_model=Figurinha)
 def updateFig(id: int, fig: Figurinha):
-    try:
-        updated = FigurinhaService.updateFig(id, fig)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    updated = FigurinhaService.updateFig(id, fig)
     if updated is None:
         raise HTTPException(status_code=404, detail="Figurinha não encontrada")
     return updated
